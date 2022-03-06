@@ -1,73 +1,109 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/students/:name', function(req, res) {
-    let studentName = req.params.name
-    console.log(studentName)
-    res.send(studentName)
+// router.get('/students/:name', function(req, res) {
+//     let studentName = req.params.name
+//     console.log(studentName)
+//     res.send(studentName)
+// })
+
+// let players =
+//    [
+//        {
+//            "name": "manish",
+//            "dob": "1/1/1995",
+//            "gender": "male",
+//            "city": "jallandhar",
+//            "sports": [
+//                "swimming"
+//            ],
+//            "bookings": [
+//             {
+//                 "bookingNumber": 1,
+//                 "sportId": "",
+//                 "centerId": "",
+//                 "type": "private",
+//                 "slot": '16286598000000',
+//                 "bookedOn": '31/08/2021',
+//                 "bookedFor": '01/09/2021'
+//             },
+//             {
+//                 "bookingNumber": 2,
+//                 "sportId": "",
+//                 "centerId": "",
+//                 "type": "private",
+//                 "slot": '16286518000000',
+//                 "bookedOn": '31/08/2001',
+//                 "bookedFor": '01/09/2001'
+//             },
+//         ]
+//     },
+//     {
+//         "name": "gopal",
+//         "dob": "1/09/1995",
+//         "gender": "male",
+//         "city": "delhi",
+//         "sports": [
+//             "soccer"
+//         ],
+//         "bookings": []
+//     },
+//     {
+//         "name": "lokesh",
+//         "dob": "1/1/1990",
+//         "gender": "male",
+//         "city": "mumbai",
+//         "sports": [
+//             "soccer"
+//         ],
+//         "bookings": []
+//     },
+// ]
+let players=[];
+router.post("/players", function(req, res){
+    let player = req.body;
+    let playerName =player.name;
+    for( let i=0; i< player.length; i++){
+        if(players[i].name == playerName){
+            res.send('player alreay exist')
+        }
+    }
+    players.push(player)
+    console.log("here is the player array",players);
+    res.send(players);
+
+});
+    
+
+router.post('/players/:playerName/bookings/:bookingId', function(req, res){
+    let name = req.params.playerName;
+    let isPlayerPresent= false;// boolean is variable is written as 'is' or quetion formate
+    for (let i= 0; i<players.length; i++ ){
+        if(player[i].name == name){
+            isPlayerPresent = true;
+        }
+    }
+    if (!isPlayerPresent){
+      return  res.send('player not present')
+    }
+    let booking = req.body;
+    let bookingId = req.params.bookingId
+        for(let i=0;i<players.length; i++){
+    if(players[i].name === name){
+       
+        let isbookingPresent=false;
+        for(let j=0; j<players[i].booking.length; j++){
+            if(player[i].bookings[i].bookingNumber== bookingId){
+                return res.send('booking with this id already present for player')
+            }
+        }
+        players[i].bookings.push(booking)
+    }
+}
+    res.send(players )
 })
 
-router.get("/random" , function(req, res) {
-    res.send("hi there")
-})
 
 
-router.get("/test-api" , function(req, res) {
-    res.send("hi FunctionUp")
-})
-
-
-router.get("/test-api-2" , function(req, res) {
-    res.send("hi FunctionUp. This is another cool API")
-})
-
-
-router.get("/test-api-3" , function(req, res) {
-    res.send("hi FunctionUp. This is another cool API. And NOw i am bored of creating API's ")
-})
-
-
-router.get("/test-api-4" , function(req, res) {
-    res.send("hi FunctionUp. This is another cool API. And NOw i am bored of creating API's. PLZ STOP CREATING MORE API;s ")
-})
-
-
-
-router.get("/test-api-5" , function(req, res) {
-    res.send("hi FunctionUp5. This is another cool API. And NOw i am bored of creating API's. PLZ STOP CREATING MORE API;s ")
-})
-
-router.get("/test-api-6" , function(req, res) {
-    res.send({a:56, b: 45})
-})
-
-router.post("/test-post", function(req, res) {
-    res.send([ 23, 45 , 6])
-})
-
-
-router.post("/test-post-2", function(req, res) {
-    res.send(  { msg: "hi" , status: true }  )
-})
-
-router.post("/test-post-3", function(req, res) {
-    // let id = req.body.user
-    // let pwd= req.body.password
-
-    // console.log( id , pwd)
-
-    console.log( req.body )
-
-    res.send(  { msg: "hi" , status: true }  )
-})
-
-
-
-router.post("/test-post-4", function(req, res) {
-    let arr= [ 12, "functionup"]
-    let ele= req.body.element
-    arr.push(ele)
-    res.send(  { msg: arr , status: true }  )
-})
 
 module.exports = router;
