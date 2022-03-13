@@ -1,43 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/students/:name', function(req, res) {
-    let studentName = req.params.name
-    console.log(studentName)
-    res.send(studentName)
-})
+const UserController= require("../controllers/userController")
+const BookController= require("../controllers/bookController")
 
-router.get('/students/:user', function (req, res) {
-    let studentName = req.params.user
-    console.log(studentName)
-    res.send(studentName)
-})
-//problem 1
-router.get('/movies', function (req, res) {
-    let mov = ["anil", "kumar", "tiwary", "dhanbad"]
-    res.send(mov)
 
+router.get("/test-me", function (req, res) {
+    res.send("My first ever api!")
 })
 
 
 
-//Problem 2
-router.get('/movies/:moviesid', function (req, res) {
-    let mov = ["anil", "kumar", "tiwary", "dhanbad"]
-    let value = req.params.moviesid;
-    if (value>mov.lenght -1) {
-         res.send("ERROR") 
-        }
-    else {
-         res.send(mov[value])
-         }
+router.post("/createBook", BookController.createBook  )
 
-})
+router.get("/bookList", BookController.bookList )
 
+router.post("/year", BookController.year )
+
+router.post("/particularBooks", BookController.particularBooks )
+
+router.get("/getXINRPrice", BookController.getXINRPrice )
+
+router.get("/getRandomBooks", BookController.getRandomBooks)
 
 
 
 module.exports = router;
-
 
 
